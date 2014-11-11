@@ -250,13 +250,17 @@
 - (void)touchDragExit:(id)sender
 {
     UIButton *button = (UIButton*)sender;
-    [[button superview] setBackgroundColor:[self getBackgroundColor]];
+    DWTagView *tagView = (DWTagView *)[button superview];
+    [tagView setBackgroundColor:[self getBackgroundColor]];
+    tagView.label.textColor = self.textColor;
 }
 
 - (void)touchDragInside:(id)sender
 {
     UIButton *button = (UIButton*)sender;
-    [[button superview] setBackgroundColor:[self getBackgroundColor]];
+    DWTagView *tagView = (DWTagView *)[button superview];
+    [tagView setBackgroundColor:[self getBackgroundColor]];
+    tagView.label.textColor = self.textColor;
 }
 
 - (UIColor *)getBackgroundColor
