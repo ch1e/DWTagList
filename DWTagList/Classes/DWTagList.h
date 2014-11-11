@@ -19,6 +19,7 @@
 
 @property (nonatomic) BOOL viewOnly;
 @property (nonatomic) BOOL showTagMenu;
+@property (nonatomic) BOOL needsHighlight;
 @property (nonatomic, strong) UIView *view;
 @property (nonatomic, strong) NSArray *textArray;
 @property (nonatomic, weak) id<DWTagListDelegate> tagDelegate;
@@ -36,6 +37,7 @@
 @property (nonatomic, strong) UIColor *textColor;
 @property (nonatomic, strong) UIColor *textShadowColor;
 @property (nonatomic, assign) CGSize textShadowOffset;
+@property (nonatomic, strong) UIColor *highlightedTextColor;
 
 - (void)setTagBackgroundColor:(UIColor *)color;
 - (void)setTagHighlightColor:(UIColor *)color;
@@ -50,6 +52,7 @@
 @property (nonatomic, strong) UIButton              *button;
 @property (nonatomic, strong) UILabel               *label;
 @property (nonatomic, weak)   id<DWTagViewDelegate> delegate;
+@property (nonatomic) BOOL highlighted;
 
 - (void)updateWithString:(NSString*)text
                     font:(UIFont*)font

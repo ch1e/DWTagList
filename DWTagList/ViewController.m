@@ -52,6 +52,8 @@
     [_tagList setCornerRadius:4.0f];
     [_tagList setBorderColor:[UIColor lightGrayColor].CGColor];
     [_tagList setBorderWidth:1.0f];
+    [_tagList setHighlightedTextColor:[UIColor redColor]];
+    _tagList.needsHighlight = YES;
 
     [self.view addSubview:_tagList];
 }

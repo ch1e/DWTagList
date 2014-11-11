@@ -52,6 +52,7 @@
         self.textShadowColor = TEXT_SHADOW_COLOR;
         self.textShadowOffset = TEXT_SHADOW_OFFSET;
         self.showTagMenu = DEFAULT_SHOW_TAG_MENU;
+        self.highlightedTextColor = TEXT_COLOR;
     }
     return self;
 }
@@ -74,6 +75,7 @@
         self.textShadowColor = TEXT_SHADOW_COLOR;
         self.textShadowOffset = TEXT_SHADOW_OFFSET;
         self.showTagMenu = DEFAULT_SHOW_TAG_MENU;
+        self.highlightedTextColor = TEXT_COLOR;
     }
     return self;
 }
@@ -180,6 +182,7 @@
         [tagView setTextShadowOffset:self.textShadowOffset];
         [tagView setTag:tag];
         [tagView setDelegate:self];
+        tagView.highlighted = NO;
         
         tag++;
 
@@ -206,13 +209,27 @@
 {
     UIButton *button = (UIButton*)sender;
     [[button superview] setBackgroundColor:self.highlightedBackgroundColor];
+    DWTagView *tagView = (DWTagView *)[button superview];
+    tagView.label.textColor = self.highlightedTextColor;
+    
+    if (self.needsHighlight) tagView.highlighted = !tagView.highlighted;
 }
 
 - (void)touchUpInside:(id)sender
 {
     UIButton *button = (UIButton*)sender;
     DWTagView *tagView = (DWTagView *)[button superview];
-    [tagView setBackgroundColor:[self getBackgroundColor]];
+    
+    if (self.needsHighlight){
+        if (!tagView.highlighted){
+            [tagView setBackgroundColor:[self getBackgroundColor]];
+            tagView.label.textColor = self.textColor;
+        }
+    }
+    else{
+        [tagView setBackgroundColor:[self getBackgroundColor]];
+        tagView.label.textColor = self.textColor;
+    }
     
     if ([self.tagDelegate respondsToSelector:@selector(selectedTag:tagIndex:)]) {
         [self.tagDelegate selectedTag:tagView.label.text tagIndex:tagView.tag];
