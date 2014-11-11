@@ -13,8 +13,10 @@
 {
     UIView      *view;
     NSArray     *textArray;
+    NSArray     *objectsArray;
     CGSize      sizeFit;
     UIColor     *lblBackgroundColor;
+    
 }
 
 @property (nonatomic) BOOL viewOnly;
@@ -22,6 +24,7 @@
 @property (nonatomic) BOOL needsHighlight;
 @property (nonatomic, strong) UIView *view;
 @property (nonatomic, strong) NSArray *textArray;
+@property (nonatomic, strong) NSArray *objectsArray;
 @property (nonatomic, weak) id<DWTagListDelegate> tagDelegate;
 @property (nonatomic, strong) UIColor *highlightedBackgroundColor;
 @property (nonatomic) BOOL automaticResize;
@@ -42,6 +45,7 @@
 - (void)setTagBackgroundColor:(UIColor *)color;
 - (void)setTagHighlightColor:(UIColor *)color;
 - (void)setTags:(NSArray *)array;
+- (void)setTags:(NSArray *)array withKeyPath:(NSString*)keyPath;
 - (void)display;
 - (CGSize)fittedSize;
 
@@ -53,6 +57,7 @@
 @property (nonatomic, strong) UILabel               *label;
 @property (nonatomic, weak)   id<DWTagViewDelegate> delegate;
 @property (nonatomic) BOOL highlighted;
+@property (nonatomic, strong) id object;
 
 - (void)updateWithString:(NSString*)text
                     font:(UIFont*)font
@@ -76,6 +81,7 @@
 
 - (void)selectedTag:(NSString *)tagName tagIndex:(NSInteger)tagIndex;
 - (void)selectedTag:(NSString *)tagName;
+- (void)didTapTagWithObject:(id)object tagIndex:(NSInteger)tagIndex selected:(BOOL)selected;
 - (void)tagListTagsChanged:(DWTagList *)tagList;
 
 @end

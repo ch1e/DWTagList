@@ -30,7 +30,7 @@
 
 @implementation DWTagList
 
-@synthesize view, textArray, automaticResize;
+@synthesize view, textArray, automaticResize, objectsArray;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -80,9 +80,9 @@
     return self;
 }
 
-- (void)setTags:(NSArray *)array
-{
-    textArray = [[NSArray alloc] initWithArray:array];
+- (void)setTags:(NSArray *)array withKeyPath:(NSString*)keyPath{
+    textArray = [[NSArray alloc] initWithArray:[array valueForKeyPath:keyPath]];
+    objectsArray = [[NSArray alloc] initWithArray:array];
     sizeFit = CGSizeZero;
     if (automaticResize) {
         [self display];
@@ -91,6 +91,11 @@
     else {
         [self setNeedsLayout];
     }
+}
+
+- (void)setTags:(NSArray *)array
+{
+    [self setTags:array withKeyPath:@"self"];
 }
 
 - (void)setTagBackgroundColor:(UIColor *)color
@@ -183,6 +188,7 @@
         [tagView setTag:tag];
         [tagView setDelegate:self];
         tagView.highlighted = NO;
+        tagView.object = objectsArray[tag];
         
         tag++;
 
@@ -238,6 +244,10 @@
     if ([self.tagDelegate respondsToSelector:@selector(selectedTag:)]) {
         [self.tagDelegate selectedTag:tagView.label.text];
     }
+    
+    if ([self.tagDelegate respondsToSelector:@selector(didTapTagWithObject:tagIndex:selected:)]){
+        [self.tagDelegate didTapTagWithObject:tagView.object tagIndex:tagView.tag selected:tagView.highlighted];
+    }
 
     if (self.showTagMenu) {
         UIMenuController *menuController = [UIMenuController sharedMenuController];
@@ -257,10 +267,10 @@
 
 - (void)touchDragInside:(id)sender
 {
-    UIButton *button = (UIButton*)sender;
-    DWTagView *tagView = (DWTagView *)[button superview];
-    [tagView setBackgroundColor:[self getBackgroundColor]];
-    tagView.label.textColor = self.textColor;
+//    UIButton *button = (UIButton*)sender;
+//    DWTagView *tagView = (DWTagView *)[button superview];
+//    [tagView setBackgroundColor:[self getBackgroundColor]];
+//    tagView.label.textColor = self.textColor;
 }
 
 - (UIColor *)getBackgroundColor
