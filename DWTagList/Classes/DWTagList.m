@@ -190,6 +190,14 @@
         tagView.highlighted = NO;
         tagView.object = objectsArray[tag];
         
+        if ([self.tagDelegate respondsToSelector:@selector(shouldSelectTagForIndex:)])
+            tagView.highlighted = [self.tagDelegate shouldSelectTagForIndex:tag];
+        
+        if (tagView.highlighted){
+            [tagView setBackgroundColor:self.highlightedBackgroundColor];
+            tagView.label.textColor = self.highlightedTextColor;
+        }
+        
         tag++;
 
         [self addSubview:tagView];

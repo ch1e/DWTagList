@@ -83,6 +83,7 @@
 - (void)selectedTag:(NSString *)tagName;
 - (void)didTapTagWithObject:(id)object tagIndex:(NSInteger)tagIndex selected:(BOOL)selected;
 - (void)tagListTagsChanged:(DWTagList *)tagList;
+- (BOOL)shouldSelectTagForIndex:(NSInteger)index;
 
 @end
 
